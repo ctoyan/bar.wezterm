@@ -25,6 +25,9 @@ local M = {}
 ---@field max_width number
 ---@field throttle number
 
+---@class option.system : option.module
+---@field throttle number
+
 ---@class option.clock : option.module
 ---@field format string
 
@@ -37,6 +40,8 @@ local M = {}
 ---@field hostname option.module
 ---@field clock option.clock
 ---@field cwd option.module
+---@field cpu option.system
+---@field disk option.system
 ---@field spotify option.spotify
 
 ---@class option.padding.tabs
@@ -115,6 +120,18 @@ M.options = {
       enabled = true,
       icon = wez.nerdfonts.oct_file_directory,
       color = 7,
+    },
+    cpu = {
+      enabled = false,
+      icon = wez.nerdfonts.md_cpu_64_bit,
+      color = 3,
+      throttle = 5,
+    },
+    disk = {
+      enabled = false,
+      icon = wez.nerdfonts.md_harddisk,
+      color = 3,
+      throttle = 30,
     },
     spotify = {
       enabled = false,

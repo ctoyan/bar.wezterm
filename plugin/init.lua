@@ -41,9 +41,22 @@ end
 ---returns the name of the package, used when requiring modules
 ---@return string
 local function get_require_path()
-  local path = "httpssCssZssZsgithubsDscomsZsadriankarlensZsbarsDswezterm"
-  local path_trailing_slash = "httpssCssZssZsgithubsDscomsZsadriankarlensZsbarsDsweztermsZs"
-  return directory_exists(path_trailing_slash) and path_trailing_slash or path
+  local paths = {
+    {
+      trailing = "httpssCssZssZsgithubsDscomsZsctoyansZsbarsDsweztermsZs",
+      base = "httpssCssZssZsgithubsDscomsZsctoyansZsbarsDswezterm",
+    },
+    -- { trailing = "httpssCssZssZsgithubsDscomsZsadriankarlensZsbarsDsweztermsZs", base = "httpssCssZssZsgithubsDscomsZsadriankarlensZsbarsDswezterm" },
+  }
+  for _, p in ipairs(paths) do
+    if directory_exists(p.trailing) then
+      return p.trailing
+    end
+    if directory_exists(p.base) then
+      return p.base
+    end
+  end
+  return paths[1].base
 end
 
 package.path = package.path
@@ -61,6 +74,7 @@ local config = require "bar.config"
 local tabs = require "bar.tabs"
 local user = require "bar.user"
 local spotify = require "bar.spotify"
+local system = require "bar.system"
 local paths = require "bar.paths"
 
 ---conforming to https://github.com/wez/wezterm/commit/e4ae8a844d8feaa43e1de34c5cc8b4f07ce525dd
@@ -179,6 +193,18 @@ wez.on("update-status", function(window, pane)
   }
 
   local callbacks = {
+    {
+      name = "cpu",
+      func = function()
+        return system.get_cpu_usage(options.modules.cpu.throttle)
+      end,
+    },
+    {
+      name = "disk",
+      func = function()
+        return system.get_disk_usage(options.modules.disk.throttle)
+      end,
+    },
     {
       name = "spotify",
       func = function()
