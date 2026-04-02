@@ -76,7 +76,6 @@ local user = require "bar.user"
 local spotify = require "bar.spotify"
 local system = require "bar.system"
 local paths = require "bar.paths"
-local quota = require "bar.quota"
 
 ---conforming to https://github.com/wez/wezterm/commit/e4ae8a844d8feaa43e1de34c5cc8b4f07ce525dd
 ---@param c table: wezterm config object
@@ -194,12 +193,6 @@ wez.on("update-status", function(window, pane)
   }
 
   local callbacks = {
-    {
-      name = "quota",
-      func = function()
-        return quota.get_usage(options.modules.quota.throttle)
-      end,
-    },
     {
       name = "cpu",
       func = function()
