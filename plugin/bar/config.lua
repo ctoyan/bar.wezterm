@@ -43,6 +43,7 @@ local M = {}
 ---@field cpu option.system
 ---@field disk option.system
 ---@field spotify option.spotify
+---@field quota option.system
 
 ---@class option.padding.tabs
 ---@field left number
@@ -139,6 +140,12 @@ M.options = {
       color = 3,
       max_width = 64,
       throttle = 15,
+    },
+    quota = {
+      enabled = false,
+      icon = wez.nerdfonts.md_lightning_bolt,
+      color = 3,
+      throttle = 60,
     },
   },
 }
